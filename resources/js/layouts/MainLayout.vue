@@ -363,6 +363,7 @@ const navLinks = [
 /* User Dropdown */
 .user-dropdown {
     position: relative;
+    z-index: 1060;
 }
 
 .user-btn {
