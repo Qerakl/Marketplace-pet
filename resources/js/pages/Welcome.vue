@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import MainLayout from '@/layouts/MainLayout.vue'
 import ProductCard from '@/components/ui/ProductCard.vue'
@@ -59,33 +59,43 @@ const meta = reactive({
             : 'https://example.com/images/og/marketplace-home.jpg',
 })
 
-const jsonLd = computed(() => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://example.com'
-    return JSON.stringify(
-        {
-            '@context': 'https://schema.org',
-            '@graph': [
-                {
-                    '@type': 'Organization',
-                    name: meta.siteName,
-                    url: meta.canonical,
-                    logo: origin + '/favicon.ico',
+// JSON-LD добавляется через onMounted для SEO
+let jsonLdScript: HTMLScriptElement | null = null
+
+onMounted(() => {
+    const origin = window.location.origin
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'Organization',
+                name: meta.siteName,
+                url: meta.canonical,
+                logo: origin + '/favicon.ico',
+            },
+            {
+                '@type': 'WebSite',
+                name: meta.siteName,
+                url: meta.canonical,
+                potentialAction: {
+                    '@type': 'SearchAction',
+                    target: origin + '/catalog?q={search_term_string}',
+                    'query-input': 'required name=search_term_string',
                 },
-                {
-                    '@type': 'WebSite',
-                    name: meta.siteName,
-                    url: meta.canonical,
-                    potentialAction: {
-                        '@type': 'SearchAction',
-                        target: origin + '/catalog?q={search_term_string}',
-                        'query-input': 'required name=search_term_string',
-                    },
-                },
-            ],
-        },
-        null,
-        0
-    )
+            },
+        ],
+    }
+
+    jsonLdScript = document.createElement('script')
+    jsonLdScript.type = 'application/ld+json'
+    jsonLdScript.textContent = JSON.stringify(jsonLd)
+    document.head.appendChild(jsonLdScript)
+})
+
+onUnmounted(() => {
+    if (jsonLdScript) {
+        jsonLdScript.remove()
+    }
 })
 
 const statsDisplay = computed(() => [
@@ -180,8 +190,6 @@ function onSubscribe() {
         <meta name="twitter:image" :content="meta.ogImage" />
 
         <meta name="theme-color" content="#0d6efd" />
-
-        <script type="application/ld+json" v-html="jsonLd" />
     </Head>
 
     <MainLayout>
