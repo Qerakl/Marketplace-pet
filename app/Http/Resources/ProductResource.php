@@ -16,7 +16,7 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
-            'description' => $this->when($this->relationLoaded('images'), $this->description),
+            'description' => $this->description,
             'price' => $this->price,
             'formatted_price' => $this->formatted_price,
             'old_price' => $this->old_price,

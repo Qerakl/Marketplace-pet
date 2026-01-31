@@ -30,6 +30,7 @@ class CatalogService
         return Product::query()
             ->with([
                 'category:id,name,slug',
+                'mainImage',
                 'images',
                 'user:id,name,avatar,is_verified',
                 'reviews' => fn ($q) => $q->with('user:id,name,avatar')->latest()->limit(10),
