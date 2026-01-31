@@ -16,10 +16,10 @@ function logout() {
 }
 
 const navLinks = [
-    { href: '/catalog', label: 'Каталог', icon: 'grid' },
-    { href: '/#categories', label: 'Категории', icon: 'list' },
-    { href: '/#how', label: 'Как это работает', icon: 'info' },
-    { href: '/#faq', label: 'FAQ', icon: 'question' },
+    { href: '/catalog', label: 'Каталог' },
+    { href: '/categories', label: 'Категории' },
+    { href: '/how-it-works', label: 'Как это работает' },
+    { href: '/faq', label: 'FAQ' },
 ]
 </script>
 

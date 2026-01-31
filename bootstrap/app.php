@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             require base_path('routes/web/auth.php');
             require base_path('routes/web/catalog.php');
             require base_path('routes/web/products.php');
+            require base_path('routes/web/pages.php');
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
