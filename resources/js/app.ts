@@ -2,7 +2,13 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
+
+// Стили
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/app.css';
+
+// Bootstrap JS
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
