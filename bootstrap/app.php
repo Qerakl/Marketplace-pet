@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             // Загрузка дополнительных роутов
+            require base_path('routes/web/auth.php');
             require base_path('routes/web/catalog.php');
             require base_path('routes/web/products.php');
         },
