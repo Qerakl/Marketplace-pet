@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/faq', [PageController::class, 'faq'])->name('faq');
-Route::get('/how-it-works', [PageController::class, 'howItWorks'])->name('how-it-works');
-Route::get('/categories', [PageController::class, 'categories'])->name('categories');
+Route::middleware('web')->group(function () {
+    Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+    Route::get('/how-it-works', [PageController::class, 'howItWorks'])->name('how-it-works');
+    Route::get('/categories', [PageController::class, 'categories'])->name('categories');
+});

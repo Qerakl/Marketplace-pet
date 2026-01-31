@@ -9,5 +9,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/catalog/category/{slug}', [CatalogController::class, 'category'])->name('catalog.category');
+Route::middleware('web')->group(function () {
+    Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
+    Route::get('/catalog/category/{slug}', [CatalogController::class, 'category'])->name('catalog.category');
+});

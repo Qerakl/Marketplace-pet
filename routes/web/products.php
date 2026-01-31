@@ -9,4 +9,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+Route::middleware('web')->group(function () {
+    Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+});
