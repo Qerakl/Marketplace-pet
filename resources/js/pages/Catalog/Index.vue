@@ -41,7 +41,7 @@ interface Props {
             links: Array<{ url: string | null; label: string; active: boolean }>
         }
     }
-    categories: Category[]
+    categories: Category[] | { data: Category[] }
     currentCategory?: Category
     filters: {
         q?: string
@@ -53,6 +53,17 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+// Нормализуем категории - могут прийти как массив или объект с data
+const normalizedCategories = computed(() => {
+    if (Array.isArray(props.categories)) {
+        return props.categories
+    }
+    if (props.categories && 'data' in props.categories) {
+        return props.categories.data
+    }
+    return []
+})
 const { isFavorite, toggle: toggleFavorite } = useFavorites()
 
 const localFilters = reactive({
@@ -171,7 +182,7 @@ function handleToggleFavorite(productId: number) {
                                         >
                                             <option value="">Все категории</option>
                                             <option
-                                                v-for="cat in categories"
+                                                v-for="cat in normalizedCategories"
                                                 :key="cat.id"
                                                 :value="cat.slug"
                                             >

@@ -43,8 +43,9 @@ const discountPercent = computed(() => {
     return null
 })
 
-function formatRating(rating: number): string {
-    return rating.toFixed(1)
+function formatRating(rating: number | string | null | undefined): string {
+    const num = Number(rating) || 0
+    return num.toFixed(1)
 }
 </script>
 
@@ -137,9 +138,9 @@ function formatRating(rating: number): string {
             </div>
 
             <!-- Rating -->
-            <div v-if="product.rating > 0" class="d-flex align-items-center mb-2">
+            <div v-if="Number(product.rating) > 0" class="d-flex align-items-center mb-2">
                 <div class="rating-stars me-1">
-                    <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= Math.round(product.rating) }">
+                    <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= Math.round(Number(product.rating)) }">
                         ★
                     </span>
                 </div>
